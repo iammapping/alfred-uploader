@@ -1,0 +1,141 @@
+#!/usr/bin/env php
+<?php
+
+// Find and initialize Composer
+$files = array(
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../../../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+);
+
+$found = false;
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        require_once $file;
+        break;
+    }
+}
+
+if (!class_exists('Composer\Autoload\ClassLoader', false)) {
+    die(
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+            'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+            'php composer.phar install' . PHP_EOL
+    );
+}
+
+// init timezone from system
+// refer from: https://bojanz.wordpress.com/2014/03/11/detecting-the-system-timezone-php/
+$timezone = 'UTC';
+if (is_link('/etc/localtime')) {
+    // Mac OS X (and older Linuxes)    
+    // /etc/localtime is a symlink to the 
+    // timezone in /usr/share/zoneinfo.
+    $filename = readlink('/etc/localtime');
+    if (strpos($filename, '/usr/share/zoneinfo/') === 0) {
+        $timezone = substr($filename, 20);
+    }
+} elseif (file_exists('/etc/timezone')) {
+    // Ubuntu / Debian.
+    $data = file_get_contents('/etc/timezone');
+    if ($data) {
+        $timezone = $data;
+    }
+} elseif (file_exists('/etc/sysconfig/clock')) {
+    // RHEL / CentOS
+    $data = parse_ini_file('/etc/sysconfig/clock');
+    if (!empty($data['ZONE'])) {
+        $timezone = $data['ZONE'];
+    }
+}
+ 
+date_default_timezone_set($timezone);
+
+
+// ignore script self
+array_shift($argv);
+
+$env = array();
+$wrapMarkdown = false;
+$lookupHistory = false;
+$query = array();
+while (($opt = array_shift($argv))) {
+    if (strpos($opt, '--') === 0) {
+        $opt = substr($opt, 2);
+        switch ($opt) {
+            case 'env':
+                // set env from cli
+                foreach (explode(';', array_shift($argv)) as $kv) {
+                    if (!empty($kv)) {
+                        $kv = explode('=', $kv);
+                        $env[trim($kv[0])] = isset($kv[1]) ? trim($kv[1]) : '';
+                    }
+                }
+                break;
+
+            case 'md': 
+                // flag wrap with markdown
+                $wrapMarkdown = true;
+                break;
+
+            case 'history':
+                // flag lookup history, not upload
+                $lookupHistory = true;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    } else {
+        // split multi files with "\t"
+        $query = array_merge($query, explode("\t", $opt));
+    }
+}
+
+if ($lookupHistory) {
+    // lookup uploaded history
+    $items = array();
+    $extensionMap = array(
+        'png' => 'public.png',
+        'jpg' => 'public.jpeg',
+        'jpeg' => 'public.jpeg',
+        'gif' => 'com.compuserve.gif'
+    );
+    foreach (Upload\History::get(isset($query[0]) ? $query[0] : '') as $it) {
+        $items[] = array(
+            'title' => $it['url'],
+            'subtitle' => PrettyDateTime\PrettyDateTime::parse((new \DateTime())->setTimestamp($it['time'])) . '. ' . $it['file'],
+            'arg' => $it['url'],
+            'icon' => array(
+                'type' => 'filetype',
+                'path' => $extensionMap[strtolower(pathinfo($it['file'], PATHINFO_EXTENSION))]
+            ),
+            'quicklookurl' => $it['url']
+        );
+    }
+    $output['items'] = $items;
+
+    echo json_encode($output);
+} else {
+    // upload image to remote
+    $uploader = new Upload\Uploader($query, $env);
+    try {
+        $uploaded = $uploader->upload();
+        // save upload history
+        Upload\History::set($uploaded);
+
+        foreach ($uploaded as $upd) {
+            if ($wrapMarkdown) {
+                // wrap url with markdown
+                echo "![]({$upd['url']})" . PHP_EOL;
+            } else {
+                echo $upd['url'] . PHP_EOL;
+            }
+        }
+    } catch (\Exception $ex) {
+        echo $ex->getMessage();
+    }
+}
+

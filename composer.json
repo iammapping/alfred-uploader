@@ -1,0 +1,23 @@
+{
+    "name": "mapping/alfred-img-uploader",
+    "description": "An Alfred image upload workflow",
+    "version": "1.0.0",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "iammapping",
+            "email": "meibing_240@126.com"
+        }
+    ],
+    "require": {
+    	"php": ">=5.3",
+        "upyun/sdk": "^2.2",
+        "danielstjules/php-pretty-datetime": "dev-master"
+    },
+    "autoload": {
+    	"psr-0": {
+    		"Upload": "src/"
+    	}
+    }
+}
