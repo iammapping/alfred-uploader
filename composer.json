@@ -1,6 +1,6 @@
 {
     "name": "mapping/alfred-img-uploader",
-    "description": "An Alfred image upload workflow",
+    "description": "An Alfred workflow to help you upload local images to cloud storage provider, and get back the public access url.",
     "version": "1.0.0",
     "type": "project",
     "license": "MIT",
