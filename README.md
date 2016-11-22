@@ -6,11 +6,15 @@ An Alfred workflow to help you upload local images to cloud storage provider (ju
 
 ### Why create this?
 
-Markdown is a great language to write a document, and generate a good looking. But it is unpleasant when you insert a local image into your document. If I share the document including some local images with others, the images will be lost. So I should upload the images to a cloud storage provider at first, and copy back the access url into my document. It's so complicated and repetitive.
+Markdown is a great language to write a document, and generate a good looking. But it is unpleasant when you insert a local image into your document. If I share the document including some local images with others, the images will be lost. So I should upload the images to a cloud storage provider at first, and copy back the access url into my document. It's so complicated and repetitive. The real terrible thing is to write a document, I want to insert a image, after I finished these fucking steps, back to the document, I have forgotten what to write.
 
 [Alfred](http://www.alfredapp.com/) is a efficient tool for Mac. There is a great feature call **Workflows**, we can create a workflow to do the complicated and repetitive work. I'm a heavy user of Alfred, I use it to find files, open apps, translate, calculate and so on. Only you can not think, no you can not do. 
 
-I can not stand to spend a lot of time waiting for the upload and copy again and again. So I create a workflow to connect file input, image processing and url output.
+I can not stand to spend a lot of time waiting for the upload and copy again and again. So I create a workflow called **Uploader** to connect file input, image processing and url output.
+
+With **Uploader**, if I want to insert a image while writing, use hotkey to open alfred, input "upload" keyword, select the image to upload, continue writing, just keep an eye on the upload success notification, paste the access url, that's all. My focus was always on the document I'm writing, alfred only disturbed for 1 to 3 seconds.
+
+The all images in this document was uploaded by Uploader  proudly. Now let me introduce Uploader to you, you can get it from [alfred-uploader](https://github.com/iammapping/alfred-uploader).
 
 
 
@@ -38,6 +42,7 @@ Fill the variables into the right list on the pop-up modal,  then save.
   * Just support `upyun` now, all provider name shoud be lower case
 * `UPLOAD_HISTORY_COUNT`
   * **Optional**, Default is `50`
+  * The maximum number of records to save
 * The provider specific variables
   * `UPYUN_BUCKET`
     * **Required**
@@ -70,7 +75,7 @@ Fill the variables into the right list on the pop-up modal,  then save.
 
 ### Usage
 
-Everything is ready. Let's upload it. 
+Everything is ready. Let's upload. 
 
 #### Upload
 
@@ -92,17 +97,17 @@ There are three ways to upload:
 
 Once you receive a notification said "😀Image upload success", it means the local image has been uploaded to remote, and the access url is ready in your clipboard, you can paste it directly.
 
-> Tips: The first way, if you select a file with "alt (option)" key pressing, the result url will wrap a markdown img tag (\![]({url}))
+> Tips: The first way, if you select a file with "alt (option)" key pressing, the result url will wrap a markdown img tag (\!\[\]\({url}\))
 
 
 
 #### Uploaded
 
-Use "uploaded" keyword to lookup the uploaded images, keeping 50 history items by default,  query filter alse support.
+Use "uploaded" keyword to lookup the uploaded images, keeping 50 records by default,  query filter alse support.
 
 ![](http://self-storage.b0.upaiyun.com/2016/11/20/147964637559652782.png)
 
-As shown above, you can see the access url, the original file path and the upload time. Once you select a image, the access url copied, then paste it to anywhere you want. From last tips, the "alt" key also works here.
+As shown above, you can see the access url, the original file path and the upload time. Once you select a image, the access url copied, then paste it to anywhere you want. From last tips learned, the "alt" key also works here.
 
 
 
@@ -111,7 +116,7 @@ As shown above, you can see the access url, the original file path and the uploa
 - [ ] support S3
 - [ ] remove the remote image
 - [ ] don't upload repeated
-- [ ] process image local (To be discussed)
+- [ ] process image local, such as crop, resize... (To be discussed)
 
 
 
