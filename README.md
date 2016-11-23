@@ -2,7 +2,7 @@
 
 An Alfred workflow to help you upload local images to cloud storage provider (just support [upyun](https://www.upyun.com/) now), and get back the public access url.
 
-
+![](http://self-storage.b0.upaiyun.com/2016/11/23/147986500608518950.gif)
 
 ### Why create this?
 
