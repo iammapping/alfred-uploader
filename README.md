@@ -1,6 +1,6 @@
 ## alfred-uploader
 
-An Alfred workflow to help you upload local images to cloud storage provider (just support [upyun](https://www.upyun.com/) now), and get back the public access url.
+An Alfred workflow to help you upload local images to cloud storage provider (support [s3](https://aws.amazon.com/s3/), [upyun](https://www.upyun.com/), [qiniu](http://www.qiniu.com/) now), and get back the public access url.
 
 ![](http://self-storage.b0.upaiyun.com/2016/11/23/147986500608518950.gif)
 
@@ -39,11 +39,33 @@ Fill the variables into the right list on the pop-up modal,  then save.
 * `UPLOAD_PROVIDER`
   * **Required**
   * The cloud storage provider, such as: S3, Upyun, Qiniu...
-  * Just support `upyun` now, all provider name shoud be lower case
+  * Support `s3` , `upyun`, `qiniu`  now, all provider name shoud be lower case
 * `UPLOAD_HISTORY_COUNT`
   * **Optional**, Default is `50`
   * The maximum number of records to save
-* The provider specific variables
+* `USE_RAW_FILENAME`
+  * **Optional**, Default is `fasle`
+  * Whether use the original filename
+  * The image uploaded will be given a random numeric filename, looks like *147963249017197318.png*. 
+  * If `true`, the image upload with the original filename, but some special chars (space and ?#%:) will replace with "_"
+* The specific variables for `s3`
+  * `S3_BUCKET`
+    * **Required**
+    * The bucket name
+  * `S3_REGION`
+    * **Required**
+    * The region of the bucket. e.g. ap-southeast-1
+  * `S3_ACCESS_KEY`
+    * **Required**
+    * Your AWS access key ID
+  * `S3_SECRET_KEY`
+    * **Required**
+    * Your AWS secret access key
+  * `S3_BASEURL`
+    * **Optinal**, Default is the returned `ObjectURL`
+    * The base url of the access url
+    * You can change to the domain of yourself, only when you have config the **CNAME** redirector
+* The specific variables for `upyun`
   * `UPYUN_BUCKET`
     * **Required**
     * The service name created at **Upyun Console**
@@ -59,17 +81,29 @@ Fill the variables into the right list on the pop-up modal,  then save.
     * **Optional**, Default is `false`
     * Whether enable stream mode
     * Upload with stream mode will save memory
-  * `UPYUN_USE_RAW_FILENAME`
-    * **Optional**, Default is `fasle`
-    * Whether use the original filename
-    * The image uploaded will be given a random numeric filename, looks like *147963249017197318.png*. 
-    * If `true`, the image upload with the original filename, but some special chars (space and ?#%:) will replace with "_"
   * `UPYUN_BASEURL`
     * **Optinal**, Default is `http://{UPYUN_BUCKET}.b0.upaiyun.com`
     * The base url of the access url
     * You can change to the domain of yourself, only when you have config the **CNAME** redirector
+* The specific variables for `qiniu`
+  * `QINIU_BUCKET`
+    * **Required**
+    * The bucket name
+  * `QINIU_ACCESS_KEY`
+    * **Required**
+    * Your access key created at [https://portal.qiniu.com/user/key](https://portal.qiniu.com/user/key)
+  * `QINIU_SECRET_KEY`
+    * **Required**
+    * Your secret key created at [https://portal.qiniu.com/user/key](https://portal.qiniu.com/user/key)
+  * `QINIU_BASEURL`
+    * **Required**
+    * The base url of the access url
+    * You can change to the domain of yourself, only when you have config the **CNAME** redirector
 
-> Attention: Don't export your secret variables, unless you want to share your storage.
+> Attention: 
+>
+> * Don't export your secret variables, unless you want to share your storage.
+> * All `BASEURL` variable should be without the tail '/'.
 
 
 
@@ -113,7 +147,7 @@ As shown above, you can see the access url, the original file path and the uploa
 
 ### TODO
 
-- [ ] support S3
+- [x] support S3, Qiniu
 - [ ] remove the remote image
 - [ ] don't upload repeated
 - [ ] process image local, such as crop, resize... (To be discussed)

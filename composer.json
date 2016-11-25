@@ -13,7 +13,9 @@
     "require": {
     	"php": ">=5.3",
         "upyun/sdk": "^2.2",
-        "danielstjules/php-pretty-datetime": "dev-master"
+        "danielstjules/php-pretty-datetime": "dev-master",
+        "qiniu/php-sdk": "^7.1",
+        "aws/aws-sdk-php": "^3.19"
     },
     "autoload": {
     	"psr-0": {

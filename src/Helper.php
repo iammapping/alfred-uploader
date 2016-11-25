@@ -25,12 +25,13 @@ class Helper {
 	}
 
 	public static function dirname() {
-		return date('/Y/m/d');
+		return date('Y/m/d');
 	}
 
-	public static function filename($rawname, $random = true) {
+	public static function filename($rawname) {
 		$info = pathinfo($rawname);
-		if ($random) {
+		$useRawName = self::getenv('USE_RAW_FILENAME', false);
+		if (!$useRawName) {
 			$rand = '';
 			$i = 8;
 			while ($i--) {

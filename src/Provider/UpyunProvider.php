@@ -14,7 +14,6 @@ class UpyunProvider implements ProviderInterface {
 	private $user;
 	private $pwd;
 	private $useStream;
-	private $useRawFilename;
 	private $baseurl;
 
 	private $options;
@@ -24,15 +23,15 @@ class UpyunProvider implements ProviderInterface {
 		$this->user = Helper::getenv('UPYUN_USER');
 		$this->pwd = Helper::getenv('UPYUN_PWD');
 		$this->useStream = Helper::getenv('UPYUN_USE_STREAM', false);
-		$this->useRawFilename = Helper::getenv('UPYUN_USE_RAW_FILENAME', false);
 		$this->baseurl = Helper::getenv('UPYUN_BASEURL', 'http://' . $this->bucket . '.b0.upaiyun.com');
 
 		$this->upyun = new UpYun($this->bucket, $this->user, $this->pwd);
 	}
 
 	public function upload($file) {
-		$dirname = Helper::dirname();
-		$filename = Helper::filename($file, !$this->useRawFilename);
+		// key start with '/'
+		$dirname = '/' . Helper::dirname();
+		$filename = Helper::filename($file);
 		if ($this->useStream) {
 			$fh = fopen($file, 'r');
 			$this->upyun->writeFile($dirname . '/' . $filename, $fh, true);
