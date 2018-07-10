@@ -8,7 +8,7 @@ An Alfred workflow to help you upload local images or image from clipboard to cl
 
 Markdown is a great language to write a document, and generate a good looking. But it is unpleasant when you insert a local image into your document. If I share the document including some local images with others, the images will be lost. So I should upload the images to a cloud storage provider at first, and copy back the access url into my document. It's so complicated and repetitive. The real terrible thing is to write a document, I want to insert a image, after I finished these fucking steps, back to the document, I have forgotten what to write.
 
-[Alfred](http://www.alfredapp.com/) is a efficient tool for Mac. There is a great feature call **Workflows**, we can create a workflow to do the complicated and repetitive work. I'm a heavy user of Alfred, I use it to find files, open apps, translate, calculate and so on. Only you can not think, no you can not do. 
+[Alfred](http://www.alfredapp.com/) is a efficient tool for Mac. There is a great feature called **Workflows**, we can create a workflow to do the complicated and repetitive work. I'm a heavy user of Alfred, I use it to find files, open apps, translate, calculate and so on. Only you can not think, no you can not do. 
 
 I can not stand to spend a lot of time waiting for the upload and copy again and again. So I create a workflow called **Uploader** to connect file input, image processing and url output.
 
@@ -122,7 +122,7 @@ There are three ways to upload:
 
 2. locate a file in Alfred, select "Uploader" operation
    ![](http://self-storage.b0.upaiyun.com/2016/11/20/147964477679258266.png)
-   ​
+   
 
 3. select files in Finder, press hotkey "cmd+shift+s". I highly recommend this way, because it support multi files once.
    ![](http://self-storage.b0.upaiyun.com/2016/11/20/147964528913390042.png)
@@ -147,9 +147,10 @@ As shown above, you can see the access url, the original file path and the uploa
 
 ### Change Logs
 
-####v1.0.2
+#### v1.0.2
 
 * support uploading image from clipboard (thanks [@Tony Xu](https://github.com/tonyxu-io))
+
 
 #### v1.0.1
 
