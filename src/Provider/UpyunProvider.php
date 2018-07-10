@@ -23,7 +23,7 @@ class UpyunProvider implements ProviderInterface {
 		$this->user = Helper::getenv('UPYUN_USER');
 		$this->pwd = Helper::getenv('UPYUN_PWD');
 		$this->useStream = Helper::getenv('UPYUN_USE_STREAM', false);
-		$this->baseurl = Helper::getenv('UPYUN_BASEURL', 'http://' . $this->bucket . '.b0.upaiyun.com');
+		$this->baseurl = Helper::getenv('UPYUN_BASEURL', 'https://' . $this->bucket . '.b0.upaiyun.com');
 
 		$this->upyun = new UpYun($this->bucket, $this->user, $this->pwd);
 	}

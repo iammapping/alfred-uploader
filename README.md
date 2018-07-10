@@ -1,6 +1,6 @@
 ## alfred-uploader
 
-An Alfred workflow to help you upload local images to cloud storage provider (support [s3](https://aws.amazon.com/s3/), [upyun](https://www.upyun.com/), [qiniu](http://www.qiniu.com/) now), and get back the public access url.
+An Alfred workflow to help you upload local images or image from clipboard to cloud storage provider (support [s3](https://aws.amazon.com/s3/), [upyun](https://www.upyun.com/), [qiniu](http://www.qiniu.com/) now), and get back the public access url.
 
 ![](http://self-storage.b0.upaiyun.com/2016/11/23/147986500608518950.gif)
 
@@ -14,7 +14,7 @@ I can not stand to spend a lot of time waiting for the upload and copy again and
 
 With **Uploader**, if I want to insert a image while writing, use hotkey to open alfred, input "upload" keyword, select the image to upload, continue writing, just keep an eye on the upload success notification, paste the access url, that's all. My focus was always on the document I'm writing, alfred only disturbed for 1 to 3 seconds.
 
-The all images in this document was uploaded by Uploader  proudly. Now let me introduce Uploader to you, you can get it from [alfred-uploader](https://github.com/iammapping/alfred-uploader).
+The all images in this document was uploaded by Uploader proudly. Now let me introduce Uploader to you, you can get it from [alfred-uploader](https://github.com/iammapping/alfred-uploader).
 
 
 
@@ -118,7 +118,7 @@ There are three ways to upload:
 1. Input "upload" keyword, pick a file.  You can also filter the files with query.
    ![](http://self-storage.b0.upaiyun.com/2016/11/20/147964465139413269.png)
 
-   ​
+   
 
 2. locate a file in Alfred, select "Uploader" operation
    ![](http://self-storage.b0.upaiyun.com/2016/11/20/147964477679258266.png)
@@ -129,7 +129,7 @@ There are three ways to upload:
 
 
 
-Once you receive a notification said "😀Image upload success", it means the local image has been uploaded to remote, and the access url is ready in your clipboard, you can paste it directly.
+Once you receive a notification said "😀Image upload complete", it means the local image has been uploaded to remote, and the access url is ready in your clipboard, you can paste it directly.
 
 > Tips: The first way, if you select a file with "alt (option)" key pressing, the result url will wrap a markdown img tag (\!\[\]\({url}\))
 
@@ -145,12 +145,15 @@ As shown above, you can see the access url, the original file path and the uploa
 
 
 
-### TODO
+### Change Logs
 
-- [x] support S3, Qiniu
-- [ ] remove the remote image
-- [ ] don't upload repeated
-- [ ] process image local, such as crop, resize... (To be discussed)
+####v1.0.2
+
+* support uploading image from clipboard (thanks [@Tony Xu](https://github.com/tonyxu-io))
+
+#### v1.0.1
+
+* support S3, Qiniu
 
 
 

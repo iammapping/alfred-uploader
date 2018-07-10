@@ -59,6 +59,7 @@ array_shift($argv);
 $env = array();
 $wrapMarkdown = false;
 $lookupHistory = false;
+$fromClipboard = false;
 $query = array();
 while (($opt = array_shift($argv))) {
     if (strpos($opt, '--') === 0) {
@@ -83,12 +84,26 @@ while (($opt = array_shift($argv))) {
                 // flag lookup history, not upload
                 $lookupHistory = true;
                 break;
+
+            case 'clipboard':
+                // flag upload from clipboard    
+                $fromClipboard = true;
+                $dir = str_replace(' ', '\ ', escapeshellcmd(__DIR__));
+                $tmpfile = '/tmp/alfred-upload-from-clipboard-' . date('YmdHis') . '.png';
+                // save image in clipboard as a tmp file
+                system("{$dir}/pngpaste {$tmpfile}", $ret);
+                if (!$ret) {
+                    $query[] = $tmpfile;
+                }
+
+                break;
+                
             
             default:
                 # code...
                 break;
         }
-    } else {
+    } elseif (!$fromClipboard) {
         // split multi files with "\t"
         $query = array_merge($query, explode("\t", $opt));
     }
@@ -136,6 +151,11 @@ if ($lookupHistory) {
         }
     } catch (\Exception $ex) {
         echo $ex->getMessage();
+    }
+
+    if ($fromClipboard) {
+        // clean the tmp file generate from clipboard
+        @unlink($query[0]);
     }
 }
 
